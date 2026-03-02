@@ -1,0 +1,14 @@
+# A-maze-ing Configuration File
+# Maze dimensions (automatically converted to odd numbers if needed)
+WIDTH=10
+HEIGHT=10
+# Entry and exit coordinates (x,y)
+ENTRY=9, 9
+exit=0,0
+# Output file for hex format maze
+OUTPUT_FILE=maze.txt
+# Generate perfect maze (single path between entrance and exit)
+PERFECT=true
+# Optional: Random seed for reproducible mazes
+SEED=42
+
