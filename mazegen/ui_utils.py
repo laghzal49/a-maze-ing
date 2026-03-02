@@ -4,6 +4,14 @@ import time
 from typing import List, Tuple
 
 from .utils import safe_addstr as _safe_addstr
+from .colors import (
+    COLOR_PATH,
+    COLOR_STATUS,
+    COLOR_WALL_ALT,
+    COLOR_WALL,
+    COLOR_END,
+    COLOR_WALL_ALT2,
+)
 
 
 def terminal_big_enough(
@@ -33,7 +41,7 @@ def show_terminal_too_small(
     draw_centered_message(
         stdscr,
         message,
-        curses.color_pair(5),
+        curses.color_pair(COLOR_END),
         clear_first=True,
     )
     stdscr.refresh()
@@ -65,7 +73,8 @@ def draw_centered_message(
 
 def loop_color_message(stdscr: "curses.window", message: str) -> None:
     """Display a message cycling through different colors."""
-    colors = [1, 2, 3, 4, 5, 6, 7]
+    colors = [COLOR_PATH, COLOR_STATUS, COLOR_WALL_ALT, COLOR_WALL, 
+              COLOR_END, COLOR_PATH, COLOR_WALL_ALT2]
 
     for color in colors:
         draw_centered_message(

@@ -2,13 +2,13 @@
 import curses
 
 
-COLOR_PATH = 1
-COLOR_STATUS = 2
-COLOR_WALL_ALT = 3
-COLOR_WALL = 4
-COLOR_END = 5
-COLOR_PLAYER = 6
-COLOR_WALL_ALT2 = 7
+COLOR_PATH: int = 1
+COLOR_STATUS: int = 2
+COLOR_WALL_ALT: int = 3
+COLOR_WALL: int = 4
+COLOR_END: int = 5
+COLOR_PLAYER: int = 6
+COLOR_WALL_ALT2: int = 7
 
 
 def initialize_colors() -> None:
