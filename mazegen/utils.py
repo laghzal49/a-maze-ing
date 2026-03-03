@@ -1,7 +1,10 @@
 import curses
-from typing import Optional
+from typing import Optional, List, Tuple
 
 from .maze_generator import Maze
+
+# Direction constants used across modules
+DIRECTIONS: List[Tuple[int, int]] = [(0, -1), (1, 0), (0, 1), (-1, 0)]  # N, E, S, W
 
 
 def is_wall_between(maze: Maze, x: int, y: int, dx: int, dy: int) -> bool:

@@ -3,7 +3,6 @@
 from typing import List
 
 from .maze_generator import Maze
-from .utils import is_wall_between
 
 
 class AsciiCorner:
@@ -39,28 +38,10 @@ class AsciiCorner:
 
 def render_maze(maze: Maze) -> None:
     """Render a static ASCII version of the maze."""
+    from .maze_drawing import compute_wall_grids
+    
+    horiz, vert = compute_wall_grids(maze)
     w, h = maze.width, maze.height
-
-    horiz = [[False for _ in range(w)] for _ in range(h + 1)]
-    vert = [[False for _ in range(h)] for _ in range(w + 1)]
-
-    for jy in range(h + 1):
-        for x in range(w):
-            if jy == 0:
-                horiz[jy][x] = _is_wall_between(maze, x, 0, 0, -1)
-            elif jy == h:
-                horiz[jy][x] = _is_wall_between(maze, x, h - 1, 0, 1)
-            else:
-                horiz[jy][x] = _is_wall_between(maze, x, jy - 1, 0, 1)
-
-    for jx in range(w + 1):
-        for y in range(h):
-            if jx == 0:
-                vert[jx][y] = _is_wall_between(maze, 0, y, -1, 0)
-            elif jx == w:
-                vert[jx][y] = _is_wall_between(maze, w - 1, y, 1, 0)
-            else:
-                vert[jx][y] = _is_wall_between(maze, jx - 1, y, 1, 0)
 
     for jy in range(h + 1):
         wall_parts: List[str] = []

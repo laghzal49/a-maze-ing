@@ -4,7 +4,7 @@ from collections import deque
 from typing import Deque, List, Tuple, Optional
 
 from .maze_generator import Maze
-from .utils import is_wall_between
+from .utils import is_wall_between, DIRECTIONS
 
 
 def bfs_find_path(
@@ -26,19 +26,12 @@ def bfs_find_path(
     d.append((xs, ys, [start]))
     visited = {start}
 
-    directions = [
-        (0, -1),
-        (1, 0),
-        (0, 1),
-        (-1, 0),
-    ]
-
     while d:
         x, y, path = d.popleft()
         if (x, y) == end:
             return path
 
-        for dx, dy in directions:
+        for dx, dy in DIRECTIONS:
             nx, ny = x + dx, y + dy
             if (
                 maze.in_bounds(nx, ny)
