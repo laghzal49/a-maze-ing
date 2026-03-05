@@ -86,7 +86,7 @@ def setup_phase(
     config_start: Optional[Tuple[int, int]],
     config_end: Optional[Tuple[int, int]],
 ) -> Tuple[Optional[Tuple[int, int]], Optional[Tuple[int, int]]]:
-    """Setup phase for configuring entry/exit before gameplay."""
+    """Initialize curses and display game splash screen."""
     curses.curs_set(0)
     stdscr.nodelay(False)
     stdscr.keypad(True)
@@ -153,7 +153,7 @@ def render_maze_curses(
     perfect: bool = True,
     output_file: Optional[str] = None,
 ) -> None:
-    """Render maze using curses with keyboard controls."""
+    """Main game loop for interactive maze gameplay with keyboard controls."""
     curses.curs_set(0)
     stdscr.nodelay(False)
     stdscr.keypad(True)
@@ -195,6 +195,7 @@ def render_maze_curses(
     maze_cols = maze.width * MAZE_COLS_MULTIPLIER + MAZE_LAYOUT_OFFSET
 
     def _compute_layout(max_y: int, max_x: int) -> Tuple[int, int, int, int]:
+        """Calculate maze and panel positions on screen."""
         maze_left = max(0, (max_x - maze_cols) // 2)
         maze_top = max(0, (max_y - maze_rows) // 2)
         panel_left = max_x + 1
@@ -206,6 +207,7 @@ def render_maze_curses(
         max_x: int,
         display_status: str,
     ) -> None:
+        """Render the status panel with error handling."""
         try:
             maze_top_calc = max(0, (max_y - maze_rows) // 2)
             draw_bottom_panel(
@@ -223,7 +225,7 @@ def render_maze_curses(
             return
 
     def _update_player_cell(x: int, y: int, is_player: bool) -> None:
-        """Update a single cell for player movement."""
+        """Update a maze cell display for player position."""
         try:
             max_y, max_x = stdscr.getmaxyx()
             maze_top, maze_left, _, _ = _compute_layout(max_y, max_x)
@@ -253,6 +255,7 @@ def render_maze_curses(
         override_status: Optional[str] = None,
         full_clear: bool = True,
     ) -> None:
+        """Render maze, walls, player, path, and status panel."""
         if full_clear:
             stdscr.erase()
         max_y, max_x = stdscr.getmaxyx()
@@ -293,6 +296,7 @@ def render_maze_curses(
         stdscr.refresh()
 
     def _update_path_state() -> None:
+        """Find and update solution path using BFS algorithm."""
         try:
             new_path = bfs_find_path(maze, start, end)
             path_ref[0] = new_path
@@ -306,7 +310,7 @@ def render_maze_curses(
             path_found_ref[0] = False
 
     def _regenerate_maze(status: str) -> None:
-        # Keep path generation strictly after maze generation.
+        """Generate new maze and reset game state."""
         path_set.clear()
         path_ref[0] = None
         path_found_ref[0] = False
@@ -325,6 +329,7 @@ def render_maze_curses(
         needs_full_redraw[0] = True
 
     def _animate_current_path() -> None:
+        """Animate solution path being revealed step by step."""
         if not path_ref[0]:
             return
         saved_path = list(path_ref[0])
