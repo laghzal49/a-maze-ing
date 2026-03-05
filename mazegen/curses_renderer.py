@@ -49,13 +49,13 @@ STATUS_PERFECT_OFF: str = "Perfect mode OFF."
 STATUS_NO_OUTPUT_FILE: str = "Error: no output file configured."
 STATUS_SAVED: str = "Saved to {output_file}."
 STATUS_SAVE_ERROR: str = "Error: {error}"
-STATUS_COLORS_CHANGED: str = "Colors changed (wall pair { \
-    wall}, 42 pair {pattern})."
+STATUS_COLORS_CHANGED: str = "Colors changed (wall pair {wall}, 42 pair \
+    {pattern})."
 STATUS_SEED_UPDATED: str = "Seed updated: {seed}."
 STATUS_WON: str = "You won! Press R to play again or Q to quit."
 STATUS_ANIMATING: str = "Animating path... (press Q to skip)"
-STATUS_ALGO_CHANGED: str = "Algorithm set to { \
-    algo} and ready to play (use ARROWS)."
+STATUS_ALGO_CHANGED: str = "Algorithm set to {algo} and ready to play \
+    (use ARROWS)."
 
 
 ALGO_CYCLE: List[str] = ["dfs", "prim", "hunt"]
