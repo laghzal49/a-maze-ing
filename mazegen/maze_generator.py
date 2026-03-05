@@ -36,7 +36,7 @@ class Maze:
                                        for _ in range(height)]
         self.blocked_cells: Set[Tuple[int, int]] = set()
         self.pattern_origin: Optional[Tuple[int, int]] = None
-        self.pattern_size: Optional[Tuple[int, int]] = None  # (w, h)
+        self.pattern_size: Optional[Tuple[int, int]] = None
 
     def in_bounds(self, x: int, y: int) -> bool:
         """Check if (x, y) is within the maze boundaries."""

@@ -1,7 +1,7 @@
 """Main curses-based maze renderer with interactive gameplay."""
 import curses
 import random
-from typing import List, Optional, Set, Tuple, Callable, Dict, Any
+from typing import List, Optional, Set, Tuple
 
 from .maze_generator import Maze
 from .path_finder import bfs_find_path
@@ -26,11 +26,10 @@ MAZE_LAYOUT_OFFSET: int = 1
 
 def compute_layout_size(width: int, height: int) -> Tuple[int, int]:
     """Compute maze display dimensions.
-    
+
     Args:
         width: Maze width in cells
         height: Maze height in cells
-        
     Returns:
         Tuple of (min_rows, min_cols) needed for display
     """
@@ -42,18 +41,21 @@ def compute_layout_size(width: int, height: int) -> Tuple[int, int]:
 STATUS_READY: str = "Ready to play (Use ARROWS)"
 STATUS_PATH_ON: str = "Path display ON."
 STATUS_PATH_OFF: str = "Path display OFF."
-STATUS_MAZE_REGENERATED: str = "Maze regenerated. And ready to play (use ARROWS)"
+STATUS_MAZE_REGENERATED: str = "Maze regenerated. \
+    And ready to play (use ARROWS)"
 STATUS_NEW_GAME: str = "New Game Started."
 STATUS_PERFECT_ON: str = "Perfect mode ON."
 STATUS_PERFECT_OFF: str = "Perfect mode OFF."
 STATUS_NO_OUTPUT_FILE: str = "Error: no output file configured."
 STATUS_SAVED: str = "Saved to {output_file}."
 STATUS_SAVE_ERROR: str = "Error: {error}"
-STATUS_COLORS_CHANGED: str = "Colors changed (wall pair {wall}, 42 pair {pattern})."
+STATUS_COLORS_CHANGED: str = "Colors changed (wall pair { \
+    wall}, 42 pair {pattern})."
 STATUS_SEED_UPDATED: str = "Seed updated: {seed}."
 STATUS_WON: str = "You won! Press R to play again or Q to quit."
 STATUS_ANIMATING: str = "Animating path... (press Q to skip)"
-STATUS_ALGO_CHANGED: str = "Algorithm set to {algo} and ready to play (use ARROWS)."
+STATUS_ALGO_CHANGED: str = "Algorithm set to { \
+    algo} and ready to play (use ARROWS)."
 
 
 ALGO_CYCLE: List[str] = ["dfs", "prim", "hunt"]
@@ -387,7 +389,8 @@ def render_maze_curses(
                 STATUS_ALGO_CHANGED.format(algo=current_algo))
         elif key in [ord('t'), ord('T')]:
             current_perfect = not current_perfect
-            status_text = STATUS_PERFECT_ON if current_perfect else STATUS_PERFECT_OFF
+            status_text = STATUS_PERFECT_ON if current_perfect \
+                else STATUS_PERFECT_OFF
             _regenerate_maze(status_text)
         elif key in KEY_CHANGE_SEED:
             if output_file is None:
@@ -395,13 +398,15 @@ def render_maze_curses(
             else:
                 try:
                     write_output_file(output_file, maze, start, end)
-                    status_msg[0] = STATUS_SAVED.format(output_file=output_file)
+                    status_msg[0] = STATUS_SAVED.format(
+                        output_file=output_file)
                 except Exception as e:
                     status_msg[0] = STATUS_SAVE_ERROR.format(error=str(e))
             needs_full_redraw[0] = True
         elif key in KEY_CHANGE_COLOR:
             color_42 = COLOR_PATTERN_MIN + (color_42 % COLOR_PATTERN_WRAP)
-            color_wall = COLOR_WALL_MIN + ((color_wall - COLOR_WALL_MIN + 1) % COLOR_WALL_WRAP)
+            color_wall = COLOR_WALL_MIN + ((
+                color_wall - COLOR_WALL_MIN + 1) % COLOR_WALL_WRAP)
             status_msg[0] = STATUS_COLORS_CHANGED.format(
                 wall=color_wall, pattern=color_42
             )

@@ -73,7 +73,7 @@ def draw_centered_message(
 
 def loop_color_message(stdscr: "curses.window", message: str) -> None:
     """Display a message cycling through different colors."""
-    colors = [COLOR_PATH, COLOR_STATUS, COLOR_WALL_ALT, COLOR_WALL, 
+    colors = [COLOR_PATH, COLOR_STATUS, COLOR_WALL_ALT, COLOR_WALL,
               COLOR_END, COLOR_PATH, COLOR_WALL_ALT2]
 
     for color in colors:

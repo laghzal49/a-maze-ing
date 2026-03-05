@@ -44,7 +44,7 @@ class AsciiCorner:
 def render_maze(maze: Maze) -> None:
     """Render a static ASCII version of the maze."""
     from .maze_drawing import compute_wall_grids
-    
+
     horiz, vert = compute_wall_grids(maze)
     w, h = maze.width, maze.height
 

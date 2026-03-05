@@ -47,7 +47,8 @@ def build_cell_line(
         elif maze.is_blocked(x, y):
             line_parts.append((BLOCKED_MARKER, curses.color_pair(color_42)))
         else:
-            line_parts.append((EMPTY_CELL_MARKER, curses.color_pair(color_wall)))
+            line_parts.append((
+                EMPTY_CELL_MARKER, curses.color_pair(color_wall)))
 
         wall = WALL_VERTICAL if vert[x + 1][y] else WALL_SPACE
         line_parts.append((wall, curses.color_pair(color_wall)))
