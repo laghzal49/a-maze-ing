@@ -170,7 +170,7 @@ def render_maze_curses(
         show_terminal_too_small(stdscr, min_rows, min_cols)
         return
 
-    h = maze.height
+    height_var = maze.height
     color_42 = COLOR_PATTERN_MIN
     color_wall = COLOR_WALL_MIN
     current_algo = algo if algo in ALGO_CYCLE else "dfs"
@@ -191,7 +191,7 @@ def render_maze_curses(
     show_path = True
     needs_full_redraw = [False]
     horiz, vert = compute_wall_grids(maze)
-    maze_rows = h * MAZE_ROWS_MULTIPLIER + MAZE_LAYOUT_OFFSET
+    maze_rows = height_var * MAZE_ROWS_MULTIPLIER + MAZE_LAYOUT_OFFSET
     maze_cols = maze.width * MAZE_COLS_MULTIPLIER + MAZE_LAYOUT_OFFSET
 
     def _compute_layout(max_y: int, max_x: int) -> Tuple[int, int, int, int]:
@@ -264,7 +264,7 @@ def render_maze_curses(
             if current_path_set is not None
             else (path_set if show_path else set())
         )
-        for jy in range(h + 1):
+        for jy in range(height_var + 1):
             if row >= max_y:
                 break
 
@@ -274,7 +274,7 @@ def render_maze_curses(
             draw_maze_line(stdscr, row, line_wall, maze_left, max_x)
             row += 1
 
-            if jy == h or row >= max_y:
+            if jy == height_var or row >= max_y:
                 break
 
             line_cell = build_cell_line(
