@@ -6,34 +6,39 @@ from .maze_generator import Maze
 
 
 class AsciiCorner:
-    """Maps corner wall configurations to Unicode box-drawing characters."""
-    
-    # Lookup table: (left, right, up, down) -> character
-    CORNER_MAP = {
-        (True, True, True, True): "╋",
-        (True, False, True, True): "┫",
-        (False, True, True, True): "┣",
-        (True, True, True, False): "┻",
-        (True, True, False, True): "┳",
-        (True, False, True, False): "┃",
-        (False, True, False, False): "━",
-        (True, True, False, False): "━",
-        (True, False, False, True): "┓",
-        (True, False, False, False): "┃",
-        (False, True, True, False): "┗",
-        (False, True, False, True): "┏",
-        (False, False, True, True): "┃",
-        (False, False, True, False): "┃",
-        (False, False, False, True): "┃",
-        (False, False, False, False): " ",
-    }
-
     @staticmethod
     def get_corner(left: bool, right: bool, up: bool, down: bool) -> str:
-        """Get box-drawing character for corner configuration."""
-        return AsciiCorner.CORNER_MAP.get(
-            (left, right, up, down), " "
-        )
+        if up and down and left and right:
+            return "╋"
+        elif up and down and left and not right:
+            return "┫"
+        elif up and down and not left and right:
+            return "┣"
+        elif up and not down and left and right:
+            return "┻"
+        elif not up and down and left and right:
+            return "┳"
+        elif up and down and not left and not right:
+            return "┃"
+        elif not up and not down and left and right:
+            return "━"
+        elif up and not down and left and not right:
+            return "┛"
+        elif up and not down and not left and right:
+            return "┗"
+        elif not up and down and left and not right:
+            return "┓"
+        elif not up and down and not left and right:
+            return "┏"
+        elif up and not down and not left and not right:
+            return "┃"
+        elif not up and down and not left and not right:
+            return "┃"
+        elif not up and not down and left and not right:
+            return "━"
+        elif not up and not down and not left and right:
+            return "━"
+        return " "
 
 
 def render_maze(maze: Maze) -> None:
