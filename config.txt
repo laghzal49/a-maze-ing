@@ -8,7 +8,7 @@ exit=0,0
 # Output file for hex format maze
 OUTPUT_FILE=maze.txt
 # Generate perfect maze (single path between entrance and exit)
-PERFECT=true
+PERFECT=false
 # Optional: Random seed for reproducible mazes
 SEED=42
 

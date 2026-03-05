@@ -19,9 +19,9 @@ class MazeConfig:
 
 def _parse_bool(value: str) -> bool:
     value_lower = value.strip().lower()
-    if value_lower in {"true", "1", "yes", "y"}:
+    if value_lower == "true":
         return True
-    if value_lower in {"false", "0", "no", "n"}:
+    if value_lower == "false":
         return False
     raise ValueError("PERFECT must be True or False")
 
