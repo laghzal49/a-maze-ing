@@ -11,8 +11,5 @@ build/
 .venv/
 venv/
 
-# OS
-.DS_Store
-
 # Project output
 maze.txt
