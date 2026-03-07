@@ -56,7 +56,7 @@ class Maze:
         self.pattern_size = None
 
     def create_42_pattern(self) -> bool:
-        """Create the 42 pattern in the maze."""
+        """Attempt to place the 42 pattern in the maze."""
         self.blocked_cells.clear()
         self.pattern_origin = None
         self.pattern_size = None
@@ -76,7 +76,7 @@ class Maze:
             ox < 0 or oy < 0
             or ox + pattern_width > self.width
             or oy + pattern_height > self.height
-            or ox > 9 and oy > 9
+            or self.width < 9 or self.height < 9
         ):
             return False
 
@@ -89,9 +89,6 @@ class Maze:
         for dx, dy in self.two_pattern:
             self.blocked_cells.add((ox + self.PATTERN_OFFSET + dx, oy + dy))
 
-        for x, y in self.blocked_cells:
-            if self.in_bounds(x, y):
-                self.walls[y][x] = self.FULL
         return True
 
     def _carve_passage(
