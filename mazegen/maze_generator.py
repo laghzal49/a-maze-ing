@@ -76,7 +76,7 @@ class Maze:
             ox < 0 or oy < 0
             or ox + pattern_width > self.width
             or oy + pattern_height > self.height
-            or ox < 9 or oy < 9
+            or ox > 9 or oy > 9
         ):
             return False
 
@@ -227,45 +227,34 @@ class Maze:
         start = self._first_open_cell()
         if not start:
             return
-
         cx, cy = start
         visited.add((cx, cy))
 
-        def kill() -> None:
-            """Randomly walk until hitting a dead end."""
-            nonlocal cx, cy
-            while True:
-                nbrs = self._neighbors_unvisited(
-                    cx, cy, visited=visited, rng=rng
-                )
-                if not nbrs:
-                    break
-                nx, ny, w_bit, opp_bit = rng.choice(nbrs)
-                self._carve_passage(cx, cy, nx, ny, w_bit, opp_bit)
+        while True:
+            # Kill phase
+            while nbrs := self._neighbors_unvisited(cx, cy, visited, rng):
+                nx, ny, w, o = rng.choice(nbrs)
+                self._carve_passage(cx, cy, nx, ny, w, o)
                 cx, cy = nx, ny
                 visited.add((cx, cy))
 
-        def hunt() -> Optional[Tuple[int, int]]:
-            """Scan for the first unvisited cell with a visited neighbor."""
+            # Hunt phase — must be INSIDE the outer while True
+            found = False
             for y in range(self.height):
                 for x in range(self.width):
-                    if (x, y) in visited or self.is_blocked(x, y):
-                        continue
-                    vn = self._neighbors_visited(x, y,
-                                                 visited, rng)
-                    if vn:
-                        nx, ny, w_bit, opp_bit = rng.choice(vn)
-                        self._carve_passage(x, y, nx, ny, w_bit, opp_bit)
-                        visited.add((x, y))
-                        return (x, y)
-            return None
+                    if (x, y) not in visited and not self.is_blocked(x, y):
+                        if vn := self._neighbors_visited(x, y, visited, rng):
+                            nx, ny, w, o = rng.choice(vn)
+                            self._carve_passage(x, y, nx, ny, w, o)
+                            cx, cy = x, y
+                            visited.add((cx, cy))
+                            found = True
+                            break
+                if found:
+                    break
 
-        while True:
-            kill()
-            next_start = hunt()
-            if not next_start:
+            if not found:
                 break
-            cx, cy = next_start
 
     def _add_loops(self, rng: random.Random, loop_chance: float = 0.1) -> None:
         """Randomly add loops to the maze."""
