@@ -18,8 +18,21 @@ clean:
 
 lint:
 	python3 -m flake8 .
-	python3 -m mypy .
+	python3 -m mypy . \
+		--warn-return-any \
+		--warn-unused-ignores \
+		--ignore-missing-imports \
+		--disallow-untyped-defs \
+		--check-untyped-defs
+
+lint-strict:
+	python3 -m flake8 .
+	python3 -m mypy . --strict
 
 build:
 	python3 -m pip install --user --upgrade build "setuptools>=61.0" wheel
 	python3 -m build --no-isolation
+
+venv:
+	python3 -m venv .venv
+	.venv/bin/pip install -r requirements.txt

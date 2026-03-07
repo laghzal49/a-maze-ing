@@ -24,7 +24,7 @@ def build_cell_line(
     y: int,
     player_pos: List[int],
     end: Tuple[int, int],
-    path_set: set,
+    path_set: set[tuple[int, int]],
     show_path: bool,
     color_42: int,
     color_wall: int,
