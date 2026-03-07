@@ -77,7 +77,7 @@ KEY_QUIT: List[int] = [ord('q'), ord('Q')]
 KEY_RESTART: List[int] = [ord('r'), ord('R')]
 KEY_TOGGLE_PATH: List[int] = [ord('p'), ord('P')]
 KEY_CHANGE_ALGORITHM: List[int] = [ord('a'), ord('A')]
-KEY_CHANGE_SEED: List[int] = [ord('s'), ord('S')]
+KEY_SAVE: List[int] = [ord('s'), ord('S')]
 KEY_CHANGE_COLOR: List[int] = [ord('c'), ord('C')]
 
 
@@ -397,7 +397,7 @@ def render_maze_curses(
             status_text = STATUS_PERFECT_ON if current_perfect \
                 else STATUS_PERFECT_OFF
             _regenerate_maze(status_text)
-        elif key in KEY_CHANGE_SEED:
+        elif key in KEY_SAVE:
             if output_file is None:
                 status_msg[0] = STATUS_NO_OUTPUT_FILE
             else:
