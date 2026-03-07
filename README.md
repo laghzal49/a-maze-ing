@@ -1,7 +1,3 @@
-
-Readme · MD
-Copy
-
 # A-Maze-ing — This is the Way
 
 *This project has been created as part of the 42 curriculum by tlaghzal, mel-asla*
