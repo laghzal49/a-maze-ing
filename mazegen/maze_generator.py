@@ -228,14 +228,12 @@ class Maze:
         visited.add((cx, cy))
 
         while True:
-            # Kill phase
             while nbrs := self._neighbors_unvisited(cx, cy, visited, rng):
                 nx, ny, w, o = rng.choice(nbrs)
                 self._carve_passage(cx, cy, nx, ny, w, o)
                 cx, cy = nx, ny
                 visited.add((cx, cy))
 
-            # Hunt phase — must be INSIDE the outer while True
             found = False
             for y in range(self.height):
                 for x in range(self.width):
