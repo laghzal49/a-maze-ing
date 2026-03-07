@@ -76,7 +76,7 @@ class Maze:
             ox < 0 or oy < 0
             or ox + pattern_width > self.width
             or oy + pattern_height > self.height
-            or ox > 9 or oy > 9
+            or ox > 9 and oy > 9
         ):
             return False
 
