@@ -194,13 +194,11 @@ def render_maze_curses(
     maze_rows = height_var * MAZE_ROWS_MULTIPLIER + MAZE_LAYOUT_OFFSET
     maze_cols = maze.width * MAZE_COLS_MULTIPLIER + MAZE_LAYOUT_OFFSET
 
-    def _compute_layout(max_y: int, max_x: int) -> Tuple[int, int, int, int]:
+    def _compute_layout(max_y: int, max_x: int) -> Tuple[int, int]:
         """Calculate maze and panel positions on screen."""
         maze_left = max(0, (max_x - maze_cols) // 2)
         maze_top = max(0, (max_y - maze_rows) // 2)
-        panel_left = max_x + 1
-        panel_width = 0
-        return maze_top, maze_left, panel_left, panel_width
+        return maze_top, maze_left
 
     def _draw_bottom_panel_wrapper(
         max_y: int,
@@ -228,7 +226,7 @@ def render_maze_curses(
         """Update a maze cell display for player position."""
         try:
             max_y, max_x = stdscr.getmaxyx()
-            maze_top, maze_left, _, _ = _compute_layout(max_y, max_x)
+            maze_top, maze_left = _compute_layout(max_y, max_x)
             row = maze_top + y * WALL_ROW_OFFSET + 1
             if row >= max_y:
                 return
@@ -259,8 +257,7 @@ def render_maze_curses(
         if full_clear:
             stdscr.erase()
         max_y, max_x = stdscr.getmaxyx()
-        maze_top, maze_left, _, \
-            _ = _compute_layout(max_y, max_x)
+        maze_top, maze_left = _compute_layout(max_y, max_x)
         row = maze_top
         path_to_show = (
             current_path_set
@@ -304,7 +301,7 @@ def render_maze_curses(
             if new_path:
                 path_set.update(new_path)
             path_found_ref[0] = bool(new_path)
-        except (ValueError, Exception):
+        except Exception:
             path_ref[0] = None
             path_set.clear()
             path_found_ref[0] = False
